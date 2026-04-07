@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes trajets{{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="profil">
+        <h1>Mes trajets</h1>
+
+        <div class="conteneur">
+            <section class="navigation">
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('app_profil') }}">Mes informations</a></li>
+                        <li><a href="{{ path('app_profil_trajets') }}">Mes trajets</a></li>
+                        <li><a href="{{ path('app_profil_reservations') }}">Mes réservations</a></li>
+                        <li><a href="{{ path('app_logout') }}" class="deconnexion">Se déconnecter</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <section class="informations">
+                {% if trajets is not empty %}
+                    <div class="grid">
+                        {% for trajet in trajets %}
+                            <div class="trajet">
+                                <div class="statut">
+                                    {% if trajet.dateEtHeure > date() %}
+                                        <p class="a-venir">À venir</p>
+                                    {% else %}
+                                        <p class="effectue">Effectué</p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="icone">
+                                    <img src="{{ asset('images/parcours.svg') }}" alt="Icône d'un parcours">
+
+                                    <div>
+                                        <p>{{ trajet.pointDeDepart }}</p>
+                                        <p>{{ trajet.destination }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="icone">
+                                    <img src="{{ asset('images/date-et-heure.svg') }}" alt="Icône d'un calendrier">
+
+                                    <p>{{ trajet.dateEtHeure|date('d/m/Y | H:i') }}</p>
+                                </div>
+
+                                <div class="icone">
+                                    <img src="{{ asset('images/sieges-libres.svg') }}" alt="Icône d'un passager">
+                                    
+                                    {% if trajet.siegesLibres > 1 %}
+                                        <p>Il reste encore {{ trajet.siegesLibres }} places</p>
+                                    {% elseif trajet.siegesLibres == 1 %}
+                                        <p>Il reste encore {{ trajet.siegesLibres }} place</p>
+                                    {% else %}
+                                        <p>Complet</p>
+                                    {% endif %}
+                                </div>
+
+                                {% if trajet.dateEtHeure > date() %}
+                                    <div class="modifier">
+                                        <a href="{{ path('app_profil_trajet_modifier', {'id': trajet.id}) }}">
+                                            <button class="white">Modifier</button>
+                                        </a>
+
+                                        <a href="{{ path('app_profil_trajet_supprimer', {'id': trajet.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trajet ?')">
+                                            <button class="white">Supprimer</button>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="vide">Vous n'avez créé aucun trajet pour le moment.</p>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+{% endblock %}

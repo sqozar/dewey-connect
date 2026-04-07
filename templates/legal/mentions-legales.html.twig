@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales{{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="legal">
+        <section>
+            <h1>Mentions légales</h1>
+
+            <h2>Site</h2>
+
+            <p><strong>Nom :</strong> Dewey Connect</p>
+            <p><strong>Type de service :</strong> Application interne permettant la mise en relation de collaborateurs pour du covoiturage.</p>
+            <p><strong>URL :</strong> <a href="https://dewey-connect.ovh">https://dewey-connect.ovh</a></p>
+
+            <h2>Éditeur du site et responsable de publication</h2>
+
+            <ul>
+                <li><strong>Nom :</strong> Irving Cazaban</li>
+                <li><strong>Email :</strong> <a href="mailto:irving.cazaban@ynov.com">irving.cazaban@ynov.com</a></li>
+            </ul>
+
+            <p>La création du site s’inscrit dans le cadre de l’obtention du titre RNCP37873.</p>
+            <p>Le site n’a aucune vocation commerciale et n’est accessible que dans un cadre d’évaluation technique.</p>
+            
+            <h2>Hébergeur</h2>
+
+            <ul>
+                <li><strong>Nom :</strong> OVH</li>
+                <li><strong>Adresse :</strong> 2 Rue Kellermann, 59100 Roubaix</li>
+                <li><strong>URL :</strong> <a href="https://www.ovhcloud.com/fr/">https://www.ovhcloud.com/fr/</a></li>
+
+            <h2>Propriété intellectuelle</h2>
+
+            <p>L’ensemble du contenu (textes, éléments graphiques, code, images, structure du site, fonctionnalités…) est protégé par les lois relatives à la propriété intellectuelle.</p>
+            <p>Toute reproduction ou représentation, même partielle, est interdite sans autorisation.</p>
+
+            <h2>Limitations de responsabilité</h2>
+
+            <p>Le site Dewey Connect est un projet pédagogique et peut contenir des erreurs, dysfonctionnements ou interruptions de service.</p>
+            <p>L’éditeur ne peut être tenu responsable des dommages directs ou indirects liés à l’utilisation du site.</p>
+            <p>Les trajets et informations saisis sont fictifs et ne doivent en aucun cas être utilisés dans un cadre réel.</p>
+
+            <h2>Données personnelles</h2>
+
+            <p>Voir la <a href="{{ path('app_politique_de_confidentialite') }}">politique de confidentialité</a>.</p>
+        </section>
+    </main>
+{% endblock %}

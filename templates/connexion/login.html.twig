@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{{ parent() }}{% endblock %}
+
+{% block body %}
+    <body class="authentification connexion">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="message {{ type }}">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <main>
+            <section>
+                <a href="{{ path('app_accueil') }}" class="image"><img src="{{ asset('images/banniere.jpg') }}" alt="Image de fond"></a>
+
+                <form method="post">
+                    <h1>Connexion</h1>
+
+                    <div class="formulaire">
+                        <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" placeholder="Adresse email" required>
+                        <input type="password" name="_password" id="password" autocomplete="current-password" placeholder="Mot de passe" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+                    
+                    <button type="submit">Se connecter</button>
+
+                    <p>Aucun compte ? <a href="{{ path('app_register') }}">Inscrivez-vous</a> !</p>
+                </form>
+            </section>
+        </main>
+    </body>
+{% endblock %}

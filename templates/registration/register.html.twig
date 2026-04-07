@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{{ parent() }}{% endblock %}
+
+{% block body %}
+    <body class="authentification inscription">
+        <main>
+            <section>
+                <a href="{{ path('app_accueil') }}" class="image"><img src="{{ asset('images/banniere.jpg') }}" alt="Image de fond"></a>
+
+                {{ form_start(registrationForm) }}
+                    <h1>Inscription</h1>
+
+                    <div class="formulaire">
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword) }}
+                        
+                        <div class="nom">
+                            {{ form_row(registrationForm.prenom) }}
+                            {{ form_row(registrationForm.nom_de_famille) }}
+                        </div>
+
+                        {{ form_row(registrationForm.telephone) }}
+                        
+                        <div class="conditions">
+                            {{ form_row(registrationForm.agreeTerms, {
+                                label: "J'accepte les conditions"
+                            }) }}
+                        </div>
+                    </div>
+
+                    <button type="submit">S'inscrire</button>
+
+                    <p>Déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a> !</p>
+                {{ form_end(registrationForm) }}
+
+            </section>
+        </main>
+    </body>
+{% endblock %}

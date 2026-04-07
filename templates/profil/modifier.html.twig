@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="profil">
+        <h1>Modifier mes informations</h1>
+
+        <a href="{{ path('app_profil') }}" class="annuler">Annuler la modification</a>
+
+        <div class="conteneur">
+            <section class="navigation">
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('app_profil') }}">Mes informations</a></li>
+                        <li><a href="{{ path('app_profil_trajets') }}">Mes trajets</a></li>
+                        <li><a href="{{ path('app_profil_reservations') }}">Mes réservations</a></li>
+                        <li><a href="{{ path('app_logout') }}" class="deconnexion">Se déconnecter</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <section class="informations">
+                <div class="centre">
+                    {{ form_start(profil) }}
+                        {{ form_row(profil.email) }}
+                        
+                        <div class="nom">
+                            {{ form_row(profil.prenom) }}
+                            {{ form_row(profil.nom_de_famille) }}
+                        </div>
+                        
+                        {{ form_row(profil.telephone) }}
+                        {{ form_row(profil.plainPassword) }}
+
+                        <button type="submit">Enregistrer</button>
+                    {{ form_end(profil) }}
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}

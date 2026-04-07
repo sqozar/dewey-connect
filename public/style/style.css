@@ -1,0 +1,1066 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+body.scroll {
+  position: fixed;
+  width: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li, button, label, input {
+  font-family: "DM Sans", sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 45px;
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 30px;
+  }
+}
+
+h2 {
+  font-size: 40px;
+}
+@media (max-width: 768px) {
+  h2 {
+    font-size: 25px;
+  }
+}
+
+p, a, li, button, input, select, label {
+  font-size: 20px;
+}
+@media (max-width: 768px) {
+  p, a, li, button, input, select, label {
+    font-size: 15px;
+  }
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+  color: #33b698;
+  background-color: transparent;
+  border: solid 3px #33b698;
+  border-radius: 50px;
+  padding: 5px 20px;
+  margin: 50px auto;
+}
+@media (max-width: 768px) {
+  button {
+    border-width: 2px;
+    padding: 5px 10px;
+  }
+}
+button::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  background-image: url("../images/fleche.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.25s ease;
+}
+button:hover {
+  cursor: pointer;
+}
+button:hover::after {
+  transform: rotate(45deg);
+}
+button.white {
+  color: white;
+  border-color: white;
+  margin-bottom: 0;
+}
+button.white::after {
+  filter: brightness(3);
+}
+
+.trajet {
+  border-radius: 25px;
+  padding: 50px 25px;
+}
+@media (max-width: 768px) {
+  .trajet {
+    padding: 25px;
+  }
+}
+.trajet .icone {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+  .trajet .icone {
+    margin-bottom: 15px;
+  }
+}
+.trajet .icone img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  object-position: center;
+}
+.trajet .icone div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+}
+.trajet button {
+  margin: 0 auto;
+}
+.trajet button.invalide {
+  background-color: #33b698;
+}
+.trajet button.invalide:hover {
+  cursor: not-allowed;
+}
+
+.annuler {
+  color: black;
+}
+@media (max-width: 768px) {
+  .annuler {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+  }
+}
+.annuler::before {
+  content: "< ";
+}
+
+.message, form div.formulaire li, form div#reservation li, .profil form li {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  z-index: 2;
+  animation: transition 0.25s ease-out;
+}
+.message.success, form div.formulaire li.success, form div#reservation li.success, .profil form li.success {
+  background-color: #33b698;
+}
+.message.erreur, form div.formulaire li.erreur, form div#reservation li.erreur, .profil form li.erreur {
+  background-color: red;
+}
+.message.information, form div.formulaire li.information, form div#reservation li.information, .profil form li.information {
+  background-color: blue;
+}
+.message.invisible, form div.formulaire li.invisible, form div#reservation li.invisible, .profil form li.invisible {
+  animation: transition-inverse 0.25s ease-in forwards;
+}
+
+.message {
+  font-size: 20px;
+}
+@media (max-width: 768px) {
+  .message {
+    font-size: 15px;
+  }
+}
+
+.message p, .message a {
+  color: white;
+}
+
+.message a {
+  display: block;
+  text-align: center;
+}
+
+form div.formulaire li, form div#reservation li, .profil form li {
+  list-style: none;
+  background-color: red;
+}
+
+@keyframes transition {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes transition-inverse {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+header .desktop, header .mobile {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+header .desktop .logotype, header .mobile .logotype {
+  margin: 10px 0;
+}
+header .desktop .logotype img, header .mobile .logotype img {
+  width: 100%;
+}
+header .desktop ul, header .mobile ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+header .desktop ul a, header .mobile ul a {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  header .desktop ul a, header .mobile ul a {
+    color: white;
+  }
+}
+header .desktop .profil, header .mobile .profil {
+  width: 40px;
+}
+header .desktop .profil img, header .mobile .profil img {
+  width: 100%;
+}
+header .desktop {
+  margin: 0 auto 50px;
+}
+@media (max-width: 768px) {
+  header .desktop {
+    display: none;
+  }
+}
+header .desktop .logotype {
+  width: 10%;
+}
+header .desktop ul {
+  gap: 100px;
+}
+header .mobile {
+  position: relative;
+  margin: 0 auto 25px;
+}
+@media (min-width: 769px) {
+  header .mobile {
+    display: none;
+  }
+}
+header .mobile .logotype {
+  width: 30%;
+}
+header .mobile .burger, header .mobile .croix {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  color: white;
+  line-height: 0;
+}
+header .mobile .burger img, header .mobile .croix img {
+  width: 100%;
+}
+header .mobile .burger {
+  right: 0;
+}
+header .mobile .croix {
+  right: 5%;
+  display: none;
+}
+header .mobile nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  height: 100vh;
+  width: 100%;
+  background-color: #000;
+}
+header .mobile nav ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  flex-direction: column;
+  gap: 50px;
+}
+header .mobile nav ul a {
+  font-size: 20px;
+}
+header .mobile.ouvert {
+  width: 100%;
+}
+header .mobile.ouvert .burger {
+  display: none;
+}
+header .mobile.ouvert .croix {
+  display: block;
+  z-index: 1;
+}
+header .mobile.ouvert nav {
+  display: block;
+}
+header .mobile.ouvert .profil img {
+  filter: invert(1);
+}
+
+header.accueil .desktop, header.accueil .mobile {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+}
+
+header.accueil .desktop a {
+  color: white;
+}
+header.accueil .desktop .profil img {
+  filter: invert(1);
+}
+
+header.accueil .burger img {
+  filter: invert(1);
+}
+
+footer .conteneur {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: solid 1px #33b698;
+  padding: 50px 0;
+  margin: 75px auto 0;
+}
+@media (max-width: 768px) {
+  footer .conteneur {
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px 0;
+    margin: 50px auto 0;
+  }
+}
+footer .conteneur .logotype {
+  width: 10%;
+}
+@media (max-width: 768px) {
+  footer .conteneur .logotype {
+    width: 30%;
+  }
+}
+footer .conteneur .logotype img {
+  width: 100%;
+}
+footer .conteneur .pages {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  footer .conteneur .pages {
+    width: 100%;
+    flex-direction: column;
+    gap: 25px;
+  }
+}
+footer .conteneur .pages ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+}
+footer .conteneur .pages ul a {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  footer .conteneur .pages ul a {
+    font-size: 17.5px;
+  }
+}
+footer .credit {
+  width: 100%;
+  color: white;
+  text-align: center;
+  background-color: #33b698;
+  padding: 10px 0;
+}
+
+main.accueil a {
+  text-decoration: none;
+}
+main.accueil .banniere {
+  position: relative;
+  height: 90vh;
+}
+@media (max-width: 768px) {
+  main.accueil .banniere {
+    height: 75vh;
+  }
+}
+main.accueil .banniere h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  color: white;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  main.accueil .banniere h1 {
+    width: 75%;
+  }
+}
+main.accueil .banniere h1.burger {
+  z-index: 0;
+}
+main.accueil .banniere div {
+  height: 100%;
+}
+main.accueil .banniere div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+main.accueil .banniere img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+main.accueil #creer-un-trajet {
+  width: 90%;
+  padding: 100px 0 50px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  main.accueil #creer-un-trajet {
+    padding: 50px 0 25px;
+    margin: auto;
+  }
+}
+main.accueil #creer-un-trajet h2 {
+  margin-bottom: 50px;
+}
+main.accueil #creer-un-trajet #trajet {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: #33b698;
+  border-radius: 50px;
+  padding: 10px;
+}
+@media (max-width: 768px) {
+  main.accueil #creer-un-trajet #trajet {
+    flex-direction: column;
+    border-radius: 25px;
+  }
+}
+main.accueil #creer-un-trajet #trajet div {
+  width: 25%;
+}
+@media (max-width: 768px) {
+  main.accueil #creer-un-trajet #trajet div {
+    width: 100%;
+  }
+}
+main.accueil #creer-un-trajet #trajet div label {
+  display: none;
+}
+main.accueil #creer-un-trajet #trajet div input {
+  height: 50px;
+  width: 100%;
+  border: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+main.accueil #creer-un-trajet #trajet div input:focus {
+  outline-color: black;
+}
+main.accueil #creer-un-trajet #trajet div:first-of-type input {
+  border-radius: 25px 0 0 25px;
+}
+@media (max-width: 768px) {
+  main.accueil #creer-un-trajet #trajet div:first-of-type input {
+    border-radius: 25px 25px 0 0;
+  }
+}
+main.accueil #creer-un-trajet #trajet div:last-of-type input {
+  border-radius: 0 25px 25px 0;
+}
+@media (max-width: 768px) {
+  main.accueil #creer-un-trajet #trajet div:last-of-type input {
+    border-radius: 0 0 25px 25px;
+  }
+}
+main.accueil #creer-un-trajet button {
+  margin-bottom: 0;
+}
+main.accueil .texte-defilant {
+  padding-top: 50px;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  main.accueil .texte-defilant {
+    padding-top: 25px;
+  }
+}
+main.accueil .texte-defilant .animation {
+  display: flex;
+  animation: text-defilant 30s linear infinite;
+}
+main.accueil .texte-defilant .animation .textes {
+  display: flex;
+  flex-shrink: 0;
+}
+main.accueil .texte-defilant .animation .textes p {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  font-size: 50px;
+  font-weight: bold;
+  margin-left: 50px;
+}
+@media (max-width: 768px) {
+  main.accueil .texte-defilant .animation .textes p {
+    gap: 25px;
+    font-size: 25px;
+    margin-left: 25px;
+  }
+}
+main.accueil .texte-defilant .animation .textes p::after {
+  content: "";
+  height: 25px;
+  width: 25px;
+  display: block;
+  border-radius: 100%;
+}
+@media (max-width: 768px) {
+  main.accueil .texte-defilant .animation .textes p::after {
+    height: 15px;
+    width: 15px;
+  }
+}
+@keyframes text-defilant {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+main.accueil section.texte-defilant p {
+  color: #33b698;
+}
+main.accueil section.texte-defilant p::after {
+  background-color: #33b698;
+}
+main.accueil #voir-les-trajets-disponibles {
+  background-color: #33b698;
+  padding-bottom: 100px;
+}
+@media (max-width: 768px) {
+  main.accueil #voir-les-trajets-disponibles {
+    padding-bottom: 50px;
+  }
+}
+main.accueil #voir-les-trajets-disponibles .texte-defilant {
+  rotate: 180deg;
+}
+main.accueil #voir-les-trajets-disponibles .texte-defilant p {
+  color: white;
+}
+main.accueil #voir-les-trajets-disponibles .texte-defilant p::after {
+  background-color: white;
+}
+main.accueil #voir-les-trajets-disponibles .trajets {
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  margin: 50px auto 0;
+}
+@media (max-width: 768px) {
+  main.accueil #voir-les-trajets-disponibles .trajets {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 25px;
+  }
+}
+main.accueil #voir-les-trajets-disponibles .trajets .trajet {
+  background-color: white;
+}
+main.accueil #voir-les-trajets-disponibles .vide {
+  color: white;
+}
+
+.authentification section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  display: flex;
+  background-color: #33b698;
+  border-radius: 25px;
+}
+@media (max-width: 768px) {
+  .authentification section {
+    flex-direction: column;
+    width: 90%;
+  }
+}
+.authentification section .image {
+  position: relative;
+  width: 60%;
+  object-fit: cover;
+  line-height: 0;
+}
+@media (max-width: 768px) {
+  .authentification section .image {
+    width: 100%;
+  }
+}
+.authentification section .image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url("../images/logotype-blanc.svg");
+  background-size: 25%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 25px 0 0 25px;
+}
+@media (max-width: 768px) {
+  .authentification section .image::after {
+    border-radius: 25px 25px 0 0;
+  }
+}
+.authentification section .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 25px 0 0 25px;
+}
+@media (max-width: 768px) {
+  .authentification section .image img {
+    border-radius: 25px 25px 0 0;
+  }
+}
+.authentification section form {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  padding: 50px 25px;
+}
+@media (max-width: 768px) {
+  .authentification section form {
+    width: 90%;
+    gap: 25px;
+    padding: 50px 0;
+    margin: auto;
+  }
+}
+.authentification section form h1 {
+  color: white;
+}
+.authentification section form .formulaire {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+}
+.authentification section form .formulaire input {
+  color: white;
+  background-color: transparent;
+  border: solid 2px white;
+  padding: 10px;
+}
+.authentification section form .formulaire input::placeholder {
+  color: white;
+}
+.authentification section form .formulaire input:focus {
+  outline-color: black;
+}
+.authentification section form button {
+  color: white;
+  border-color: white;
+  margin: 0 auto;
+}
+.authentification section form button::after {
+  filter: brightness(3);
+}
+.authentification section form p {
+  color: white;
+  text-align: center;
+}
+.authentification.inscription label {
+  display: none;
+}
+.authentification.inscription input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.authentification.inscription .nom {
+  display: flex;
+  gap: 10px;
+}
+.authentification.inscription .conditions div {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+  gap: 10px;
+}
+.authentification.inscription .conditions div input {
+  position: relative;
+  width: fit-content;
+  appearance: none;
+}
+.authentification.inscription .conditions div input:hover {
+  cursor: pointer;
+}
+.authentification.inscription .conditions div input:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.authentification.inscription .conditions div label {
+  display: block;
+  color: white;
+}
+
+.reservation {
+  width: 75%;
+  margin: auto;
+}
+.reservation .trajet {
+  width: fit-content;
+  color: white;
+  background-color: #33b698;
+  margin: 50px auto 0;
+}
+.reservation .trajet img {
+  filter: invert(1);
+}
+.reservation .trajet label {
+  display: none;
+}
+.reservation .trajet #reservation {
+  width: fit-content;
+  margin: 0 auto 35px;
+}
+.reservation .trajet #reservation select {
+  color: white;
+  border: solid 2px white;
+  appearance: none;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding: 10px 40px 10px 10px;
+}
+.reservation .trajet #reservation select:focus {
+  outline-color: black;
+}
+.reservation .trajet #reservation select option {
+  color: black;
+}
+
+.profil {
+  width: 75%;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .profil {
+    width: 90%;
+  }
+}
+.profil .conteneur {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur {
+    flex-direction: column;
+    margin-top: 25px;
+  }
+}
+.profil .conteneur .navigation {
+  height: fit-content;
+  width: 25%;
+  background-color: #33b698;
+  border-radius: 25px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .navigation {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+}
+.profil .conteneur .navigation ul {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  list-style: none;
+  padding: 50px 10px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .navigation ul {
+    padding: 25px 10px;
+  }
+}
+.profil .conteneur .navigation ul a {
+  color: white;
+}
+.profil .conteneur .navigation ul a.deconnexion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profil .conteneur .navigation ul a.deconnexion::before {
+  content: "";
+  height: 15px;
+  width: 15px;
+  background-image: url("../images/deconnexion.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.profil .conteneur .informations {
+  width: 70%;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations {
+    width: 100%;
+  }
+}
+.profil .conteneur .informations .centre {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .centre {
+    width: 100%;
+  }
+}
+.profil .conteneur .informations .centre p {
+  width: fit-content;
+}
+.profil .conteneur .informations .centre button {
+  margin: 25px auto 0;
+}
+.profil .conteneur .informations .centre form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.profil .conteneur .informations .centre form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.profil .conteneur .informations .centre form div input, .profil .conteneur .informations .centre form div select {
+  border: solid 2px #33b698;
+  padding: 10px;
+}
+.profil .conteneur .informations .centre form div input:focus, .profil .conteneur .informations .centre form div select:focus {
+  outline-color: black;
+}
+.profil .conteneur .informations .centre form div select {
+  appearance: none;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2333b698' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+.profil .conteneur .informations .centre form div.nom {
+  flex-direction: row;
+  gap: 10px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .centre form div.nom {
+    flex-direction: column;
+  }
+}
+.profil .conteneur .informations .centre.largeur {
+  width: 70%;
+}
+.profil .conteneur .informations .centre.largeur #trajet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.profil .conteneur .informations .centre.row {
+  width: 100%;
+  flex-direction: row;
+  gap: 25px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .centre.row {
+    flex-direction: column;
+  }
+}
+.profil .conteneur .informations .centre.row form {
+  width: 70%;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .centre.row form {
+    width: 100%;
+  }
+}
+.profil .conteneur .informations .centre.row .liste {
+  height: fit-content;
+  width: 30%;
+  background-color: #33b698;
+  border-radius: 25px;
+  padding: 25px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .centre.row .liste {
+    width: 75%;
+    margin: auto;
+  }
+}
+.profil .conteneur .informations .centre.row .liste h2 {
+  font-size: 20px;
+  color: white;
+}
+.profil .conteneur .informations .centre.row .liste ul {
+  list-style: inside;
+  margin: 25px 0;
+}
+.profil .conteneur .informations .centre.row .liste ul li {
+  color: white;
+}
+.profil .conteneur .informations .centre.row .liste p {
+  color: white;
+  margin: auto;
+}
+.profil .conteneur .informations .modifier {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 25px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .modifier {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.profil .conteneur .informations .modifier a {
+  color: black;
+}
+.profil .conteneur .informations .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+@media (max-width: 768px) {
+  .profil .conteneur .informations .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.profil .conteneur .informations .grid .trajet {
+  position: relative;
+  color: white;
+  background-color: #33b698;
+  padding: 60px 25px 25px;
+}
+.profil .conteneur .informations .grid .trajet .statut {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border-radius: 25px;
+  padding: 2.5px;
+}
+.profil .conteneur .informations .grid .trajet .statut p {
+  font-size: 15px;
+  color: white;
+  border-radius: 25px;
+  padding: 5px 10px;
+}
+.profil .conteneur .informations .grid .trajet .statut .a-venir {
+  background-color: #33b698;
+}
+.profil .conteneur .informations .grid .trajet .statut .effectue {
+  background-color: red;
+}
+.profil .conteneur .informations .grid .trajet img {
+  filter: invert(1);
+}
+.profil .conteneur .informations .grid a {
+  text-decoration: none;
+}
+
+.legal {
+  width: 90%;
+  margin: auto;
+}
+.legal h2 {
+  text-align: left;
+  margin: 50px 0 10px;
+}
+.legal ul {
+  list-style: inside;
+  margin-bottom: 25px;
+}
+.legal.politique-de-confidentialite ul {
+  margin-top: 25px;
+}
+
+/*# sourceMappingURL=style.css.map */

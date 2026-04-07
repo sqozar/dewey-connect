@@ -1,0 +1,237 @@
+$vert: #33b698;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+
+    &.scroll {
+        position: fixed;
+        width: 100%;
+    }
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li, button, label, input {
+    font-family: "DM Sans", sans-serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+h1 {
+    font-size: 45px;
+
+    @media (max-width: 768px) {
+        font-size: 30px;
+    }
+}
+
+h2 {
+    font-size: 40px;
+
+    @media (max-width: 768px) {
+        font-size: 25px;
+    }
+}
+
+p, a, li, button, input, select, label {
+    font-size: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 15px;
+    }
+}
+
+button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    color: $vert;
+    background-color: transparent;
+    border: solid 3px $vert;
+    border-radius: 50px;
+    padding: 5px 20px;
+    margin: 50px auto;
+
+    @media (max-width: 768px) {
+        border-width: 2px;
+        padding: 5px 10px;
+    }
+
+    &::after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-image: url('../images/fleche.svg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: transform .25s ease;
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        &::after {
+            transform: rotate(45deg);
+        }
+    }
+
+    &.white {
+        color: white;
+        border-color: white;
+        margin-bottom: 0;
+
+        &::after {
+            filter: brightness(3);
+        }
+    }
+}
+
+.trajet {
+    border-radius: 25px;
+    padding: 50px 25px;
+
+    @media (max-width: 768px) {
+        padding: 25px;
+    }
+
+    .icone {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+
+        @media (max-width: 768px) {
+            margin-bottom: 15px;
+        }
+
+        img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+        }
+    }
+
+    button {
+        margin: 0 auto;
+
+        &.invalide {
+            background-color: $vert;
+
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.annuler {
+    color: black;
+
+    @media (max-width: 768px) {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    &::before {
+        content: "< ";
+    }
+}
+
+.message, form div.formulaire li, form div#reservation li, .profil form li {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .1);
+    padding: 15px 20px;
+    z-index: 2;
+    animation: transition .25s ease-out;
+
+    &.success {
+        background-color: $vert;
+    }
+
+    &.erreur {
+        background-color: red;
+    }
+
+    &.information {
+        background-color: blue;
+    }
+
+    &.invisible {
+        animation: transition-inverse .25s ease-in forwards;
+    }
+}
+
+.message {
+    font-size: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 15px;
+    }
+}
+
+.message p, .message a {
+    color: white;
+}
+
+.message a {
+    display: block;
+    text-align: center;
+}
+
+form div.formulaire li, form div#reservation li, .profil form li {
+    list-style: none;
+    background-color: red;
+}
+
+@keyframes transition {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes transition-inverse {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver le trajet{{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="reservation">
+        <h1>Réserver le trajet</h1>
+
+        <a href="{{ path('app_accueil') }}#voir-les-trajets-disponibles" class="annuler">Annuler la réservation</a>
+
+        <div class="trajet">
+            <div class="icone">
+                <img src="{{ asset('images/parcours.svg') }}" alt="Icône d'un parcours">
+
+                <div>
+                    <p>{{ trajet.pointDeDepart }}</p>
+                    <p>{{ trajet.destination }}</p>
+                </div>
+            </div>
+
+            <div class="icone">
+                <img src="{{ asset('images/volant.svg') }}" alt="Icône d'un utilisateur">
+
+                <p>{{ trajet.utilisateur.prenom }} {{ trajet.utilisateur.nomDeFamille }}</p>
+            </div>
+
+            <div class="icone">
+                <img src="{{ asset('images/date-et-heure.svg') }}" alt="Icône d'un calendrier">
+
+                <p>{{ trajet.dateEtHeure|date('d/m/Y H:i') }}</p>
+            </div>
+
+            <div class="icone">
+                <img src="{{ asset('images/sieges-libres.svg') }}" alt="Icône d'un passager">
+
+                {% if trajet.siegesLibres > 1 %}
+                    <p>Il reste encore {{ trajet.siegesLibres }} places</p>
+                {% elseif trajet.siegesLibres == 1 %}
+                    <p>Il reste encore {{ trajet.siegesLibres }} place</p>
+                {% else %}
+                    <p>Complet</p>
+                {% endif %}
+            </div>
+
+            {% if reservationExistante %}
+                <div class="message information">
+                    {% if reservationExistante.siegesReserves == 1 %}
+                        <p>Vous avez déjà réservé {{ reservationExistante.siegesReserves }} siège pour ce trajet.</p>
+                    {% else %}
+                        <p>Vous avez déjà réservé {{ reservationExistante.siegesReserves }} sièges pour ce trajet.</p>
+                    {% endif %}
+
+                    <a href="{{ path('app_profil_reservation_modifier', {id: reservationExistante.id}) }}">Modifier ma réservation</a>
+                </div>
+            {% endif %}
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                
+                <div class="form-actions">
+                    <button type="submit" class="white">Réserver</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}

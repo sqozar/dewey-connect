@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un trajet{{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="profil">
+        <h1>Modifier un trajet</h1>
+
+        <a href="{{ path('app_profil_reservations') }}" class="annuler">Annuler la modification</a>
+
+        <div class="conteneur">
+            <section class="navigation">
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('app_profil') }}">Mes informations</a></li>
+                        <li><a href="{{ path('app_profil_trajets') }}">Mes trajets</a></li>
+                        <li><a href="{{ path('app_profil_reservations') }}">Mes réservations</a></li>
+                        <li><a href="{{ path('app_logout') }}" class="deconnexion">Se déconnecter</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <section class="informations">
+                <div class="centre largeur">
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        
+                        <button type="submit">Enregistrer</button>
+                    {{ form_end(form) }}
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
