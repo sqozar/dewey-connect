@@ -105,13 +105,17 @@ $vert: #33b698;
                 margin: 0 auto;
 
                 &::after {
-                    filter: brightness(3);
+                    filter: brightness(0) invert(1);
                 }
             }
 
             p {
                 color: white;
                 text-align: center;
+
+                a {
+                    color: white;
+                }
             }
         }
     }

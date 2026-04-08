@@ -41,9 +41,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $nom_de_famille = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $telephone = null;
-
     /**
      * @var Collection<int, Trajet>
      */
@@ -152,18 +149,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNomDeFamille(string $nom_de_famille): static
     {
         $this->nom_de_famille = $nom_de_famille;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(?string $telephone): static
-    {
-        $this->telephone = $telephone;
 
         return $this;
     }

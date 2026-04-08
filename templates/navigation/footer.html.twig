@@ -15,7 +15,6 @@
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('app_profil') }}">Mon profil</a></li>
                     {% else %}
-                        <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
                         <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                     {% endif %}
                 </ul>

@@ -94,7 +94,7 @@ button.white {
   margin-bottom: 0;
 }
 button.white::after {
-  filter: brightness(3);
+  filter: brightness(0) invert(1);
 }
 
 .trajet {
@@ -734,11 +734,14 @@ main.accueil #voir-les-trajets-disponibles .vide {
   margin: 0 auto;
 }
 .authentification section form button::after {
-  filter: brightness(3);
+  filter: brightness(0) invert(1);
 }
 .authentification section form p {
   color: white;
   text-align: center;
+}
+.authentification section form p a {
+  color: white;
 }
 .authentification.inscription label {
   display: none;
@@ -810,7 +813,7 @@ main.accueil #voir-les-trajets-disponibles .vide {
   outline-color: black;
 }
 .reservation .trajet #reservation select option {
-  color: black;
+  color: #33b698;
 }
 
 .profil {

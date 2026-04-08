@@ -95,7 +95,7 @@ button {
         margin-bottom: 0;
 
         &::after {
-            filter: brightness(3);
+            filter: brightness(0) invert(1);
         }
     }
 }
