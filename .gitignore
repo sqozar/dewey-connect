@@ -1,6 +1,6 @@
 /.env.local
 /var/
 /vendor/
-/docker/
+# /docker/
 /docker-compose.yml
-/dockerfile
+# /dockerfile
