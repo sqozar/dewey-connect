@@ -10,7 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Reservation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'reservation_id_seq', allocationSize: 1)]
     #[ORM\Column]
     private ?int $id = null;
 

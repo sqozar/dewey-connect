@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Trajet
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'trajet_id_seq', allocationSize: 1)]
     #[ORM\Column]
     private ?int $id = null;
 
