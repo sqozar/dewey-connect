@@ -5,6 +5,7 @@ WORKDIR /var/www
 # Installer dépendances
 RUN apt-get update && apt-get install -y \
     git unzip libicu-dev libzip-dev zip \
+    libpq-dev \
     && docker-php-ext-install intl zip pdo pdo_pgsql pgsql
 
 # Installer Composer
