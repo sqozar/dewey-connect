@@ -1,26 +1,27 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-# Installer dépendances système
+WORKDIR /var/www
+
+# Installer dépendances
 RUN apt-get update && apt-get install -y \
-    git unzip libicu-dev libonig-dev libzip-dev zip \
+    git unzip libicu-dev libzip-dev zip \
     && docker-php-ext-install intl pdo pdo_mysql zip
 
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Définir le dossier de travail
-WORKDIR /var/www
-
+# Variables de production
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
-# Copier le projet
+# Copier projet
 COPY . .
 
-# Installer les dépendances (--no-scripts évite cache:clear qui nécessite la DB)
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Installer dépendances
+RUN composer install --no-dev --optimize-autoloader
 
-# Permissions
-RUN chown -R www-data:www-data /var/www
+# Exposer port Render
+EXPOSE 10000
 
-CMD ["php-fpm"]
+# Lancer serveur PHP
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
