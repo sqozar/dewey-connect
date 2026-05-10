@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+    app:
+        build: .    
+        container_name: symfony_app
+        volumes:
+            - .:/var/www
+        depends_on:
+            - dewey-connect
+
+    nginx:
+        image: nginx:alpine
+        container_name: symfony_nginx
+        ports:
+            - "8000:80"
+        volumes:
+            - .:/var/www
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - app
+
+    dewey-connect:
+        image: postgres:16-alpine
+        container_name: symfony_db
+        environment:
+            POSTGRES_DB: dewey-connect
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: password
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+volumes:
+    postgres_data:
