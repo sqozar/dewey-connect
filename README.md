@@ -5,7 +5,7 @@
 1. [Vue d'ensemble](#vue-densemble)
 2. [Prérequis](#prérequis)
 3. [Installation locale](#installation-locale)
-4. [Déploiement](#déploiement)
+4. [Workflow Git et déploiement](#workflow-git-et-déploiement)
 
 ---
 
@@ -35,19 +35,11 @@
 
 ## Prérequis
 
-### Pour le développement local
-
-- **PHP 8.3** ou supérieur
-- **Composer** (gestionnaire de dépendances PHP)
-- **PostgreSQL 16** (local ou via Docker)
 - **Docker** et **Docker Compose**
 - **Node.js** (nécessaire pour la gestion du Sass)
+- **Git** pour le versioning
 
-### Pour le déploiement
-
-- **Docker** et **Docker Compose**
-- **Nginx** ou tout serveur web compatible
-- Accès à un serveur (Linux recommandé)
+Le déploiement en production est **automatique** via GitHub Actions et Render.
 
 ---
 
@@ -63,16 +55,11 @@ cd dewey-connect
 # 2. Démarrer les conteneurs
 docker-compose up -d
 
-# 3. Installer les dépendances PHP
-docker exec dewey-connect-php composer install
+# 3. Initialiser la base de données
+docker exec symfony_app php bin/console doctrine:database:create
+docker exec symfony_app php bin/console doctrine:migrations:migrate
 
-# 4. Créer la base de données
-docker exec dewey-connect-php php bin/console doctrine:database:create
-
-# 5. Exécuter les migrations
-docker exec dewey-connect-php php bin/console doctrine:migrations:migrate
-
-# 6. Accéder à l'application
+# 4. Accéder à l'application
 http://localhost:8000
 ```
 
@@ -92,97 +79,82 @@ DATABASE_URL="postgresql://app:password@127.0.0.1:5432/dewey_connect?serverVersi
 
 ---
 
-## Déploiement
+## Workflow Git et déploiement
 
-### Déploiement avec Docker
+### ⚠️ Important : Déploiement automatique
 
-#### 1. Préparer le projet pour la production
+**À chaque push sur `main`, le déploiement automatique se déclenche!**
+
+Donc ne poussez jamais directement sur `main`. Utilisez toujours une branche.
+
+### Workflow correct
+
+#### 1. Créer une branche pour votre travail
 
 ```bash
-# Sur votre machine locale
-composer install --optimize-autoloader --no-dev
-
-# Générer les clés secrètes
-php bin/console secrets:generate-keys
-
-# Compiler l'environnement
-composer dump-env prod
+# Créer une branche et se positionner dessus
+git checkout -b feature/votre-feature
 ```
 
-#### 2. Pousser sur le serveur
+#### 2. Travailler et committer
 
 ```bash
+# Faire vos modifications...
+
+# Ajouter et committer
 git add .
-git commit -m "Préparation pour la production"
+git commit -m "description claire de la modification"
+```
+
+#### 3. Pousser votre branche
+
+```bash
+# Envoyer votre branche sur le serveur Git
+git push origin feature/votre-feature
+
+# Aller sur GitHub et créer une Pull Request (PR)
+# → Tests automatiques s'exécutent
+```
+
+#### 4. Merger avec main (ATTENTION: déclenche le déploiement)
+
+```bash
+# Se positionner sur main
+git checkout main
+
+# Récupérer les derniers changements
+git pull origin main
+
+# Fusionner votre branche
+git merge feature/votre-feature
+
+# Pousser sur main
 git push origin main
 
-# Sur le serveur :
-cd /var/www/dewey-connect
-git pull origin main
+# ⚡ AUTOMATIQUEMENT: Déploiement en production!
+# (GitHub Actions se déclenche)
 ```
 
-#### 3. Déployer avec Docker sur le serveur
+#### 5. Nettoyer votre branche locale
 
 ```bash
-# Éditer les variables d'environnement
-nano .env.local
-
-# Démarrer les conteneurs
-docker-compose -f docker-compose.yml up -d
-
-# Installer les dépendances
-docker exec dewey-connect-php composer install --optimize-autoloader --no-dev
-
-# Créer la base de données (si première fois)
-docker exec dewey-connect-php php bin/console doctrine:database:create
-
-# Exécuter les migrations
-docker exec dewey-connect-php php bin/console doctrine:migrations:migrate
-
-# Nettoyer le cache
-docker exec dewey-connect-php php bin/console cache:clear --env=prod
+# Supprimer la branche locale (optionnel)
+git branch -d feature/votre-feature
 ```
 
-### Avec CI/CD GitHub Actions
+### Statut de déploiement
 
-Le projet inclut `.github/workflows/ci.yml` qui execute automatiquement les tests à chaque push.
+Vous pouvez voir l'état du déploiement:
+- **GitHub** → Onglet "Actions" pour voir les workflows
+- **Render** → Dashboard pour voir les logs de déploiement
 
-Pour activer le déploiement automatique :
+À chaque push sur `main`:
 
-1. Ajoutez des secrets GitHub :
-   - `SSH_KEY` : clé SSH privée pour accéder au serveur
-   - `SSH_HOST` : adresse du serveur
-   - `SSH_USER` : utilisateur SSH
+1. ✅ Tests automatiques s'exécutent
+2. ✅ Image Docker est construite
+3. ✅ Déploiement sur Render
+4. ✅ Application redémarrée en production
 
-2. Créez ``.github/workflows/deploy.yml`` :
-
-```yaml
-name: Deploy to Production
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /var/www/dewey-connect
-            git pull origin main
-            docker-compose up -d
-            docker exec dewey-connect-php composer install --optimize-autoloader --no-dev
-            docker exec dewey-connect-php php bin/console doctrine:migrations:migrate
-            docker exec dewey-connect-php php bin/console cache:clear --env=prod
-```
+**Pas besoin de commandes manuelles!**
 
 ---
