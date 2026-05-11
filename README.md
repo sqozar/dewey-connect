@@ -52,8 +52,8 @@ Le déploiement en production est **automatique** via GitHub Actions et Render.
 git clone <url-du-repo> dewey-connect
 cd dewey-connect
 
-# 2. Démarrer les conteneurs
-docker-compose up -d
+# 2. Lancer ET builder en même temps
+docker-compose up -d --build
 
 # 3. Initialiser la base de données
 docker exec symfony_app php bin/console doctrine:database:create
@@ -73,6 +73,8 @@ http://localhost:8000
 APP_ENV=dev
 APP_DEBUG=1
 APP_SECRET=votre-clé-secrète-ici
+
+# Pour générer une clé sécurisée tapper la commande "openssl rand -hex 32" dans votre terminal
 
 DATABASE_URL="postgresql://app:password@127.0.0.1:5432/dewey_connect?serverVersion=16&charset=utf8"
 ```
