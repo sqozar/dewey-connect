@@ -83,17 +83,79 @@ DATABASE_URL="postgresql://app:password@127.0.0.1:5432/dewey_connect?serverVersi
 
 ## Workflow Git et déploiement
 
+### 📌 Avant de commencer : Fork ou accès direct?
+
+#### Cas 1 : Vous êtes contributeur SANS accès direct au repo (la majorité des cas)
+
+Si vous n'avez pas les droits de push sur le repo principal, vous devez d'abord faire un **fork**:
+
+##### Étape 1 : Forker le repository
+
+1. Allez sur la page GitHub du projet
+2. Cliquez sur le bouton **"Fork"** (en haut à droite)
+3. GitHub crée une copie du repo sous votre compte
+
+##### Étape 2 : Cloner votre fork en local
+
+```bash
+# Remplacez <votre-username> par votre nom d'utilisateur GitHub
+git clone https://github.com/<votre-username>/dewey-connect.git
+cd dewey-connect
+
+# Ajouter le repo original en tant que "upstream" (pour rester à jour)
+git remote add upstream https://github.com/original-owner/dewey-connect.git
+```
+
+**Explication:**
+- `origin` = **votre copie** du projet (votre fork)
+- `upstream` = **la copie officielle** du projet (le repo original)
+
+##### Étape 3 : Mettre à jour votre fork avant de travailler
+
+```bash
+# Récupérer les derniers changements depuis le repo officiel
+git fetch upstream
+
+# Aller sur la branche main
+git checkout main
+
+# Fusionner les changements du repo officiel dans votre copie
+git merge upstream/main
+
+# Envoyer les mises à jour vers votre fork
+git push origin main
+```
+
+**Explication simple:**
+- Vous aviez laissé votre fork en retard? Ces commandes le rattrapent
+- C'est comme dire: "OK, apporte-moi les derniers changements de l'original, mets-les dans ma copie, et sauvegarde-les sur GitHub"
+
+#### Cas 2 : Vous êtes mainteneur AVEC accès direct au repo
+
+Vous pouvez cloner directement et travailler sur le repo principal:
+
+```bash
+git clone https://github.com/original-owner/dewey-connect.git
+cd dewey-connect
+```
+
+---
+
 ### ⚠️ Important : Déploiement automatique
 
-**À chaque push sur `main`, le déploiement automatique se déclenche!**
+**À chaque push sur `main` du repo principal, le déploiement automatique se déclenche!**
 
-Donc ne poussez jamais directement sur `main`. Utilisez toujours une branche.
+Donc ne poussez jamais directement sur `main`. Utilisez toujours une branche et les Pull Requests.
 
 ### Workflow correct
 
 #### 1. Créer une branche pour votre travail
 
 ```bash
+# Vérifiez que vous êtes sur main et à jour
+git checkout main
+git pull origin main
+
 # Créer une branche et se positionner dessus
 git checkout -b feature/votre-feature
 ```
@@ -114,11 +176,21 @@ git commit -m "description claire de la modification"
 # Envoyer votre branche sur le serveur Git
 git push origin feature/votre-feature
 
-# Aller sur GitHub et créer une Pull Request (PR)
+# Aller sur GitHub et créer une pull request
 # → Tests automatiques s'exécutent
 ```
 
-#### 4. Merger avec main (ATTENTION: déclenche le déploiement)
+#### 4. Attendre la validation de la pull request
+
+- Les mainteneurs revoit votre code
+- Les tests automatiques s'exécutent
+- Une fois approuvée, la pull request est fusionnée sur `main`
+
+**Note:** Si vous travaillez sur un fork, votre pull request sera créée vers le repo original.
+
+#### 5. Merger avec main (MAINTENEURS UNIQUEMENT)
+
+⚠️ **Réservé aux personnes avec accès direct au repo**
 
 ```bash
 # Se positionner sur main
@@ -137,7 +209,7 @@ git push origin main
 # (GitHub Actions se déclenche)
 ```
 
-#### 5. Nettoyer votre branche locale
+#### 6. Nettoyer votre branche locale
 
 ```bash
 # Supprimer la branche locale (optionnel)
